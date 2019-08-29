@@ -1,0 +1,172 @@
+thumbnail:hover
+{
+    position: relative;
+    top: -25px;
+    left:-35px;
+    width:500px;
+    height: auto;
+    display:block;
+    z-index:999;
+}
+/* https://codepen.io/nxworld/pen/ZYNOBZ
+ https://miketricking.github.io/bootstrap-image-hover/ */
+
+
+
+/*.nav-item:hover {
+    background-color: rgba(0,0,0,0.3);
+    
+}
+li {
+    border-radius: 25px;
+}
+*/
+.form-control {
+    background-color: white !important;
+    
+    
+}
+
+.link {
+    color: black !important;
+}
+
+
+
+.container {
+    margin-top: 3%;
+    background-color: #F8F9FA !important;
+    min-height: 100%;
+     opacity: 0.9 !important;
+     filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+
+.navcolor{
+    background-color: #F8F9FA !important;
+     opacity: 0.9 !important;
+     filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+
+.row {
+    margin-top: 5%;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+    background-color: white !important;
+    background-image: url('../slike/science2.png');
+    height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+img {
+	margin-bottom: 10px !important;
+}
+
+.bodyslika {
+    background-image: url('../slike/php.jpg');
+}
+
+.fakeimg {
+    height: 200px;
+    background: #aaa;
+  }
+/*.transparent {
+    background-color: transparent !important;
+}*/
+
+
+
+.dugme {
+    color: black !important;
+    border-color: white !important;
+   background-color: white !important;
+}
+.dugme:hover {
+    border-color: transparent !important;
+    border-color: black !important;
+   background-color: rgba(0,0,0,0.3) !important;
+}
+
+/*.projekat, #projekat
+{
+  
+     color:black;
+     padding-left: 15px;
+     margin-bottom: 2px;
+   border-radius: 25px;
+   background-color: white !important;
+}
+.projekat:hover
+{
+   border: 1px solid black;
+   color: black;
+   padding-left: 15px;
+    margin-bottom: 2px;
+   border-radius: 25px;
+   background-color: rgba(0,0,0,0.3) !important; 
+}*/
+.link1, .td, a {
+    color: black !important;
+}
+.link1:hover {
+    color: black !important;
+}
+
+.starapozadina {
+   background-color: #007FB8;
+}
+
+.card:hover{
+    border: 1px solid black;
+    
+}
+/*stara boja za dugme #256BB1*/
+button, .btn{
+  background:#436B92 !important;
+  color:#fff !important;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+button:hover,.btn:hover{
+  background:#fff !important;
+  color:#436B92 !important;
+}
+button:before,button:after, .btn:before, .btn:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #1F61A8;
+  transition:400ms ease all;
+}
+button:after, .btn:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+button:hover:before,button:hover:after, .btn:hover:before,.btn:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+
+.form-control{
+   background-color: #256BB1 !important;
+    
+}
