@@ -19,7 +19,8 @@
                 <td>Datum podnošenja</td>
                 <td><?= $d['datumPodnosenja'] ?></td>
             </tr>
-            <?php } ?>
+            <?php }
+           ?>
         </table> 
     </div>
     <div class="offset-1 col-md-5 col-11">
@@ -119,7 +120,7 @@ foreach($ocena as $o) {
         <input type="hidden" name="idPitanja" id ="idPitanja<?= $o['idPitanja'] ?>" value="<?= $o['idPitanja'] ?>" />
         <input type="hidden" name="poziv" id ="poziv<?= $o['idPitanja'] ?>" value="<?= $o['idPoziv'] ?>" />
         <input type="hidden" name="idOcena" id ="idOcena<?= $o['idPitanja'] ?>" value="<?= $o['idOcena'] ?>" />
-
+       
        <div class="col-md-4 col-sm-6 col-12"">
            <textarea class="form-control" id="ocena<?= $o['idPitanja'] ?>"  <?= $o['statusOcene']=="zakljucana"?"disabled":""?>><?= $o['komentarOcene'] ?></textarea>
        </div>
@@ -132,7 +133,7 @@ foreach($ocena as $o) {
           <?php   }  ?>
        </select>
        </div>
-  <?php if($o['statusOcene']!='zakljucana') { ?>
+  <?php  if($o['statusOcene']!='zakljucana') { ?>
     <div class="col-md-4 col-sm-6 col-12 mt-3">
        
           
@@ -150,11 +151,19 @@ foreach($ocena as $o) {
       
         <button class="btn dugme" onclick='obrisi(<?= $o['idPitanja'] ?>)'>Obrisi</button>
     </div>
- <?php } ?>
+ <?php  } ?>
 
-<?php break; } 
-else if(count($ocena)<count($pitanja))
-{ ?>
+<?php 
+ break; } 
+else 
+ {  $items = array();
+            foreach($ocena as $o) {
+             $items[] = $o['idPitanja'];
+            }
+     
+ 
+   if (!in_array($p['idPitanja'], $items))  {
+ ?>
   
       <div class="col-md-4 col-sm-6 col-12">
            <textarea class="form-control" id="ocena<?= $p['idPitanja'] ?>" ></textarea>
@@ -180,9 +189,9 @@ else if(count($ocena)<count($pitanja))
          
     </div>
 
-<?php }
+<?php break; } } 
  
-} }  }  
+}}}
 
 
 
