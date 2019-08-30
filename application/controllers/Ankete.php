@@ -126,15 +126,30 @@ class Ankete extends CI_Controller
     public function predajAnketu()
     {     
      $idAnketaPopunjena= $this->input->post('radi');
-     echo $idAnketaPopunjena;
+     $brojPitanja = $this->AnketaModel->idAnkete($idAnketaPopunjena);
+    if(count($_POST)-3<count($brojPitanja))
+    {
+        $idKorisnik = $this->session->userdata('user')->idKorisnik;
+        $mojeAnkete = $this->AnketaModel->mojaAnketa($idKorisnik);
+        $greska = "Mora se odgovoriti na sva pitanja";
+        $data=['middle'=>'middle/recenzent_anketa',
+            'middle_podaci'=>['mojeAnkete'=>$mojeAnkete, 'greska' => $greska]];
+        $this->load->view('basicTemplate',$data);
+        
+    } else {
+     //echo $idAnketaPopunjena;
      $key = [];
-    $post = [];
-   $post=$_POST;
+     $post = [];
+     $post=$_POST;
+   
+       
+    
+   
    
         foreach($post as $key => $odgovor)
         {   
            $mykey = $key;
-         if($mykey=='radi') {
+         if($mykey=='radi'|| $mykey=='var') {
               
           } else {
             $name= explode("/", $mykey);
@@ -153,6 +168,6 @@ class Ankete extends CI_Controller
             'middle_podaci'=>['mojeAnkete'=>$mojeAnkete, 'uspeh' => $uspeh]];
         $this->load->view('basicTemplate',$data);
    }
-            
-            
-}
+    }         
+    }          
+

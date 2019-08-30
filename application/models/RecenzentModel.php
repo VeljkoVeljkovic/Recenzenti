@@ -91,10 +91,9 @@ class RecenzentModel extends CI_Model{
 //    }
     
     
-    public function register ( $korIme, $mejl, $ime, $prezime, $nacionalnost, $zemlja, $NIO, $trenutnaFirma, $naucnoZvanje, $angazovanje, $oblastiStrucnosti,
-            $adresa, $vebStranica) {
+    public function register ( $mejl, $ime, $prezime, $nacionalnost, $zemlja, $NIO, $trenutnaFirma, $naucnoZvanje, $angazovanje, $oblastiStrucnosti,
+            $telefon,$adresa, $vebStranica) {
        $dataKorisnici = [
-           "korIme" => $korIme,
            "mejl" => $mejl ];
         $dataRecenzenti =[
             "ime" => $ime,
@@ -106,6 +105,7 @@ class RecenzentModel extends CI_Model{
            "naucnoZvanje" => $naucnoZvanje,
            "angazovanje" => $angazovanje,
            "idOblastiStrucnosti" => $oblastiStrucnosti,
+            "telefon"=>$telefon,
            "adresa" => $adresa,
            "vebStranica" => $vebStranica
        ];
@@ -116,6 +116,16 @@ class RecenzentModel extends CI_Model{
         $this->db->where('idKorisnik', $id);
         $query1 =$this->db->update("recenzenti", $dataRecenzenti);
         
+        
+    }
+    
+    public function oblastiStrucnosti($id){
+       $this->db->select();
+       $this->db->from('recenzenti as r');
+       $this->db->join('oblast_strucnosti as o', 'r.idOblastiStrucnosti=o.idOblastiStrucnosti');
+       $this->db->where('idKorisnik', $id);
+       $query=$this->db->get();
+        return $query->result_array(); 
         
     }
     

@@ -5,6 +5,7 @@
      
         <div class="form-group row">
             <?php
+            
                 echo form_label( "Postavi pitanje:", "pitanje", array ( "class" => "control-label" ) );
                 echo form_input( array ( "name" => "pitanje","id" => "pitanje", "class" => "form-control"));
                 echo form_error ( "pitanje" );
@@ -17,15 +18,20 @@
         
     </div>
 <div class="row" >
-
-   
+ <div class="offset-3 col-md-6 col-12 offset-3">
+   <table class="table table-responsive"> 
 <?php foreach($svaPitanja as $p)
 {
-   // if(!empty($p['pitanje']))
-   // {
 ?>
-    <div class="col-6">
-           <textarea class="form-control" disabled><?= $p['pitanje']??"" ?></textarea><br>
-    </div>
-</div>
+       <tr>
+           <td>
+              <textarea class="form-control" disabled><?= $p['pitanje']??"" ?></textarea>  
+            </td>
+            <td>
+           <button class="btn dugme" onclick='obrisi(<?= $p['idPitanja'] ?>,<?= $p['idPoziv'] ?>)'>Obrisi</button>
+           </td>
+       </tr>
+
 <?php  } ?>
+   </table>
+ </div>

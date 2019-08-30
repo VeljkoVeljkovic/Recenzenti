@@ -106,6 +106,12 @@ class ProjektiModel  extends CI_Model{
        // return $query->row(); 
       }
       
+      public function obrisiPitanjaZaPoziv($id)
+      {
+          $this->db->where('idPitanja', $id);
+          $this->db->delete('pitanja_poziv');
+      }
+      
       public function kreiranjeProjekta($nazivProjekta, $rukovodiocProjekta, $NIORukovodioc, $zvanjeRukovodioca, $angazovanjeRukovodioca, $oblastProjekta,$date, $odlukaProjekta, $idPoziva)
       {
           $data = [

@@ -96,6 +96,17 @@ class Projekti extends CI_Controller {
            
     }
     
+    public function brisanjePitanjaZaPoziv()
+    {
+        $idpitanja =  $this->input->post ("idpitanja");
+        $idpoziv = $this->input->post ("idpoziv");
+        $this->ProjektiModel->obrisiPitanjaZaPoziv($idpitanja);
+       $svaPitanja =  $this->ProjektiModel->pitanjapoziv($idpoziv);
+       $sviPozivi = $this->ProjektiModel->podacipoziv($idpoziv);
+        $this->load->view('middle/admin_pozivi_dodavanje_pitanja',
+        ['svaPitanja'=> $svaPitanja, 'sviPozivi' => $sviPozivi]);
+    }
+    
     public function kreiranjeProjekta()
     {
         $sviPozivi = $this->ProjektiModel->poziviTotal();

@@ -22,6 +22,11 @@
                 <p><?= $uspeh??"" ?></p>
             </div>
     <?php    } ?>
+        <?php if($greska??"") { ?>
+            <div class="alert alert-danger">
+                <p><?= $greska??"" ?></p>
+            </div>
+    <?php    } ?>
          <div id="projekat">
              
          </div>

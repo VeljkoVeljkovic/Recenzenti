@@ -126,4 +126,19 @@ $this->db->insert('anketa_pitanja', $data);
         $this->db->where('idAnketuRadi', $idAnketaPopunjena);
         $query = $this->db->update('anketu_radi');
     }
+    
+    public function idAnkete($idAnketaPopunjena)
+    {
+        $this->db->select('idAnketa');
+        $this->db->where('idAnketuRadi', $idAnketaPopunjena);
+        $query = $this->db->get('anketu_radi');
+        $idAnketa=$query->row()->idAnketa;
+       
+        $this->db->select();
+        $this->db->from('anketa_pitanja');
+        $this->db->where('idAnketa', $idAnketa);
+        $id = $this->db->get();
+        return $ida=$id->result_array(); 
+        
+    }
 }

@@ -1,3 +1,4 @@
+
 <?php
                echo form_open(
                     "Ankete/predajAnketu"
@@ -10,6 +11,7 @@ foreach($anketaPitanja as $a)
    if(empty($a['odgovor1']))
   {
 ?>
+<input type="hidden"  name="var" value="<?php echo $a['idAnketa'] ?>" />
 <div class="row">
     <div class="col-6">
            <textarea class="form-control" disabled><?= $a['pitanje'] ?></textarea><br>

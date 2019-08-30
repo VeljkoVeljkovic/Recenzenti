@@ -2,19 +2,14 @@
 <div class="row">
    
     <div class="offset-2 col-3 offset-1">
-        <?php   echo form_open(
+        <?php 
+        
+        echo form_open(
                     "Recenzent/promenaPodataka"
                 ); 
                 echo form_fieldset( "Izmena podataka" );
         ?>
-        <div class="form-group row">
-            <?php
-                echo form_label( "Username", "username", array ( "class" => "control-label" ) );
-                echo form_input( array ( "name" => "korIme", "class" => "form-control", "value" => $this->session
-    ->userdata('user')->korIme ) );
-                echo form_error ( "username" );
-            ?>
-        </div>
+       
         <div class="form-group row">
             <?php
                 echo form_label( "Email", "email", array ( "class" => "control-label" ) );
@@ -91,7 +86,8 @@
         </div>
 		<div class="form-group row">
            <select name="oblastiStrucnosti"  class="btn btn-sm mr-5" )>
-               <option value="" selected>Oblasti strucnosti</option>
+               
+               <option value="<?= $this->session->userdata('user')->idOblastiStrucnosti ?>" selected><?= $oblastiStrucnosti[0]['oblastStrucnosti']?></option>
               <?php foreach($sveOblasti as $s) { ?>
               <option value="<?= $s['idOblastiStrucnosti']; ?>"><?= $s['oblastStrucnosti']; ?></option>
                <?php } ?>

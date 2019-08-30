@@ -147,20 +147,21 @@ class Recenzent extends CI_Controller{
         $id = $this->session->userdata('user')->idKorisnik;
         $recenzenti = $this->RecenzentModel->RecenzentPodaci($id);
         $sveOblasti = $this->RegistrationModel->sveOblastiT();
+        $oblastiStrucnosti=$this->RecenzentModel->oblastiStrucnosti($id);
         $data=['middle'=>'middle/recenzent_home',
-            'middle_podaci'=>['recenzenti'=>$recenzenti, 'sveOblasti'=>$sveOblasti]];
+            'middle_podaci'=>['recenzenti'=>$recenzenti, 'sveOblasti'=>$sveOblasti, 'oblastiStrucnosti' => $oblastiStrucnosti]];
         $this->load->view('basicTemplate',$data);
     }
     
     public function promenaPodataka ( ) {
-//        if ( $this->recezent_validator->run ($this) == FALSE ) {
-//             $this->index ( );
-//             echo $this->input->post ( "trenutnaFirma" );// TODO da li treba ova linija ???
-//            
-//        } else {
+        if ( $this->recezent_validator->update ($this) == FALSE ) {
+             $this->promenaPodatakaRecenzenta();
+          //   echo $this->input->post ( "trenutnaFirma" );// TODO da li treba ova linija ???
+            
+        } else {
             
             $this->RecenzentModel->register ( 
-                $this->input->post ( "korIme" ),
+               
                 $this->input->post ( "mejl" ),      
                 $this->input->post ( "ime" ),
                 $this->input->post ( "prezime" ),
@@ -171,7 +172,7 @@ class Recenzent extends CI_Controller{
                 $this->input->post ( "naucnoZvanje" ),
                 $this->input->post ( "angazovanje" ),
                 $this->input->post ( "oblastiStrucnosti" ),
-                $this->input->post ( "mejl" ),
+                $this->input->post ( "telefon" ),
                 $this->input->post ( "adresa" ),
                 $this->input->post ( "vebStranica" )
                
@@ -180,7 +181,7 @@ class Recenzent extends CI_Controller{
               $this->session->set_userdata('user',
               $this->RecenzentModel->dohvatiUsera( $username));
               redirect ( "/Recenzent" );
-   //    }
+    }
       
     }
     

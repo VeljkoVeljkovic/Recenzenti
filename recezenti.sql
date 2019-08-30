@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 29, 2019 at 09:26 PM
+-- Generation Time: Aug 30, 2019 at 09:27 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -55,8 +55,10 @@ CREATE TABLE IF NOT EXISTS `anketa_odgovori` (
   `idAnketuRadi` int(11) NOT NULL,
   `idAnketaPitanje` int(11) NOT NULL,
   `odgovor` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`idAnketaOdgovor`)
-) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`idAnketaOdgovor`),
+  KEY `IdAnkRad_idx` (`idAnketuRadi`),
+  KEY `idAnkPit_idx` (`idAnketaPitanje`)
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -73,8 +75,9 @@ CREATE TABLE IF NOT EXISTS `anketa_pitanja` (
   `odgovor2` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `odgovor3` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `odgovor4` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`idAnketaPitanje`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`idAnketaPitanje`),
+  KEY `idAnke_idx` (`idAnketa`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `anketa_pitanja`
@@ -97,15 +100,18 @@ CREATE TABLE IF NOT EXISTS `anketu_radi` (
   `idAnketa` int(11) NOT NULL,
   `idKorisnik` int(11) NOT NULL,
   `status` varchar(9) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`idAnketuRadi`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`idAnketuRadi`),
+  KEY `idAn_idx` (`idAnketa`),
+  KEY `idKori_idx` (`idKorisnik`),
+  KEY `idKor_idx` (`idKorisnik`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `anketu_radi`
 --
 
 INSERT INTO `anketu_radi` (`idAnketuRadi`, `idAnketa`, `idKorisnik`, `status`) VALUES
-(1, 1, 28, NULL);
+(1, 1, 28, '');
 
 -- --------------------------------------------------------
 
@@ -122,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `korisnici` (
   `rola` varchar(45) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`idKorisnik`),
   UNIQUE KEY `korIme_UNIQUE` (`korIme`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `korisnici`
@@ -133,14 +139,14 @@ INSERT INTO `korisnici` (`idKorisnik`, `korIme`, `lozinka`, `mejl`, `rola`) VALU
 (2, 'pera1', '$2y$10$HDrd11y0/CIrfpwkOFf4IeB9FH0oR.Qch5C5AYGjM7QKTU801rflC', 'aaa@bbb.ccc', 'recezent'),
 (5, 'pera2', '$2y$10$3xJnIuFEnuVb/hiG3TB7BOLwm.5PyDEA/CeYpCtjxwFEQmVe.MJe.', 'veljkoveljkovic.mdi@yahoo.com', 'recezent'),
 (12, 'micko2', '$2y$10$dg3tbbqe0YNOf18lftKP5OWjYEHbMVyg1GS4kysZBYxr8nqbeQJES', 'mic@gmail.com', 'recezent'),
-(17, '', '$2y$10$a97ZIfxSX1DWFkXyaNqPh.zLMCQlJmE/E2lXrwvQBO0hJHkYmy9ie', '', 'recezent'),
 (24, 'giki123', '$2y$10$gMUtGVstBUf4B3e3vf/t4eFTHNxWrXAv/jLedh0Z9zPIwBWfbINfm', 'aaa@bbb.ccc', 'recenzent'),
 (25, 'Velja', '$2y$10$nfONgtf9g1usZhlsOC30wuS70u389mN/54tmSU9zgouJ8GgY/h11e', 'veveljko@gmail.com', 'recenzent'),
 (26, 'Petar', '$2y$10$qgeV1e3cGpyMatpGuxCRYeVZC4Pv3auZ/SVbqb/UwS2gozAFg013W', 'petar@gmail.com', 'administrator'),
 (27, 'Veljko', '$2y$10$7NieR7qBq6vN/K6Kitx9FuICG.hZhigOobXLEd9znnHyAzui911j2', 'ghfdh@gmail.com', 'administrator'),
-(28, 'Petarr', '$2y$10$kk6TuB5RDzhZOWXC7wbkSOKqfBJduhn05orIXvwkKQuRFXQBro7O2', 'petar@gmail.com', 'recenzent'),
+(28, 'Petarr', '$2y$10$kk6TuB5RDzhZOWXC7wbkSOKqfBJduhn05orIXvwkKQuRFXQBro7O2', 'probaaa@yahoo.com', 'recenzent'),
 (29, 'petraa', '$2y$10$I90iR1sPNH9.x78p1xrTteAFP3DA7bazJdNqSa6fjhcP8ZIHvgzUa', 'petraa@gmail.com', 'recenzent'),
-(30, 'Proba', '$2y$10$TSQW09jk8Zhub8/FXBTqGe7tLyxkIdSvk0ioIvaW3Fh1asQA0QpcC', 'proba@gmail.com', 'recenzent');
+(30, 'Proba', '$2y$10$TSQW09jk8Zhub8/FXBTqGe7tLyxkIdSvk0ioIvaW3Fh1asQA0QpcC', 'proba@gmail.com', 'recenzent'),
+(31, 'Veljaaaaa', '$2y$10$eWaPO2VHCtNokv7YwwmO5O8bybkAWwLXvny5LV6aBGimxRD9GeXt6', 'Proba123@gmail.com', 'recenzent');
 
 -- --------------------------------------------------------
 
@@ -193,15 +199,18 @@ CREATE TABLE IF NOT EXISTS `ocene` (
   `statusOcene` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
   `idPitanja` int(11) NOT NULL,
   `idPrijava` int(11) NOT NULL,
-  PRIMARY KEY (`idOcena`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`idOcena`),
+  KEY `idPita_idx` (`idPitanja`),
+  KEY `idPrijav_idx` (`idPrijava`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `ocene`
 --
 
 INSERT INTO `ocene` (`idOcena`, `komentarOcene`, `ocenaProjekta`, `statusOcene`, `idPitanja`, `idPrijava`) VALUES
-(1, 'Ispunjava uslove', '9', NULL, 20, 9);
+(26, 'twetew', '7', NULL, 22, 9),
+(27, 'fsdf', '1', NULL, 20, 9);
 
 -- --------------------------------------------------------
 
@@ -216,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `pitanja_poziv` (
   `pitanje` varchar(45) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`idPitanja`),
   KEY `idpoziv_idx` (`idPoziv`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `pitanja_poziv`
@@ -224,12 +233,11 @@ CREATE TABLE IF NOT EXISTS `pitanja_poziv` (
 
 INSERT INTO `pitanja_poziv` (`idPitanja`, `idPoziv`, `pitanje`) VALUES
 (12, 1, 'HTML, CSS osnove'),
-(13, 1, 'Proceduralni i OOP PHP'),
-(17, 1, 'Mysqli osnove.'),
 (19, 1, 'Obučenost Nastavnog kadra.'),
 (20, 5, 'HTML, CSS osnove'),
 (21, 5, 'OOP Java'),
-(22, 5, 'Budžet');
+(22, 5, 'Budžet'),
+(27, 1, 'OOP PHP');
 
 -- --------------------------------------------------------
 
@@ -265,8 +273,9 @@ CREATE TABLE IF NOT EXISTS `prijava_projekta` (
   `rokZaIzvestaj` date DEFAULT NULL,
   `prijavaProjektacol` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`idPrijava`),
-  KEY `idprojekta_idx` (`idProjekat`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `idprojekta_idx` (`idProjekat`),
+  KEY `idKorisn_idx` (`idKorisnik`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `prijava_projekta`
@@ -274,11 +283,9 @@ CREATE TABLE IF NOT EXISTS `prijava_projekta` (
 
 INSERT INTO `prijava_projekta` (`idPrijava`, `idProjekat`, `idKorisnik`, `datumPodnosenja`, `stanjePrijave`, `datumDodele`, `rokZaIzvestaj`, `prijavaProjektacol`) VALUES
 (1, 2, 27, '2019-08-01', 'dodeljen', '2019-08-01', '2019-08-30', 'da'),
-(5, 2, 0, '2019-08-14', 'dodeljen', '0000-00-00', '2019-08-23', NULL),
-(6, 2, 0, '2019-08-14', 'dodeljen', '0000-00-00', '2019-08-23', NULL),
-(7, 2, 1, '2019-08-14', 'dodeljen', '0000-00-00', '2019-08-16', NULL),
-(8, 7, 5, '2019-08-14', 'dodeljen', '0000-00-00', '2019-08-16', NULL),
-(9, 7, 28, '2019-08-22', 'dodeljen', '0000-00-00', '0000-00-00', 'da');
+(8, 7, 5, '2019-08-14', 'dodeljen', '2019-08-01', '2019-08-16', NULL),
+(9, 7, 28, '2019-08-22', 'dodeljen', '2019-08-01', '2019-09-01', 'da'),
+(10, 7, 1, '2019-08-30', 'dodeljen', '0000-00-00', '2019-09-01', NULL);
 
 -- --------------------------------------------------------
 
@@ -356,8 +363,10 @@ CREATE TABLE IF NOT EXISTS `recenzenti` (
   `adresa` varchar(100) CHARACTER SET utf8 NOT NULL,
   `vebStranica` varchar(45) CHARACTER SET utf8 NOT NULL,
   `statusPrijave` varchar(45) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'stigla',
-  PRIMARY KEY (`idRecezent`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`idRecezent`),
+  KEY `idOblastStr_idx` (`idOblastiStrucnosti`),
+  KEY `idKorr_idx` (`idKorisnik`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `recenzenti`
@@ -367,14 +376,14 @@ INSERT INTO `recenzenti` (`idRecezent`, `idKorisnik`, `ime`, `prezime`, `naciona
 (1, 1, 'Mica', 'Micic', 'srbin', 'Srbija', 'aaa', 'bbb', 'ccc', 'ddd', 2, '123456', 'fff123', 'iii', 'registrovan'),
 (2, 2, 'Pera', 'Peric', 'srbija', 'srbin', 'aaaaa', 'bbbbb', 'ccccc', 'ddddd', 2, '123456', 'fffff', 'wwwww', 'registrovan'),
 (3, 5, 'Pera', 'Peric', 'srbija', 'srbin', 'aaaaa', 'bbbbb', 'ccccc', 'ddddd', 1, '01234567', 'fffff', 'wwwww', 'registrovan'),
-(10, 12, 'mica', 'micic', 'srbija', 'srbin', 'aaaaa', 'bbbbb', 'ccccc', 'ddddd', 2, '01234567', 'fffff', 'wwwww', 'registrovan'),
 (16, 24, 'Igor', 'Peric', 'srbija', 'srbin', 'aaaaa', 'bbbbb', 'ccccc', 'ddddd', 2, '087654321', 'fffff', 'wwwww', 'stigla'),
 (17, 25, 'Veljko', 'Veljkovic', 'Srbija', 'Srbin', 'UNDP PHP', 'Eurobank', 'dip..ecc', 'analiticar', 1, '0691567555', 'Brace Jerkovic', 'www.proba.com', 'registrovan'),
 (18, 26, 'Petar', 'Petar', 'Srbin', 'Srbin', 'Srbin', 'Srbin', 'Srbin', 'Srbin', 2, '011222333', 'fsadsfdsad', 'www.proba.com', 'stigla'),
 (19, 27, 'Veljko', 'Veljašin', 'gregrrgr', 'grgrerg', 'gregreg', 'gregreg', 'gregrge', 'grergr', 2, '012111222', 'gergrgr', 'gfdfgfdg', 'registrovan'),
-(25, 28, 'Petar', 'Petar', 'Petar', 'Petar', 'Petar', 'Petar', 'Petar', 'Petar', 2, '011222333', 'Petar', 'www.petar.com', 'registrovan'),
-(26, 29, 'Petra', 'Petrovic', 'petraa', 'petraa', 'petraa', 'petraa', 'petraa', 'petraa', 0, '011224455', 'petraa@gmail.com', 'petraa@gmail.com', 'registrovan'),
-(27, 30, 'Proba', 'Proba', 'Proba', 'Proba', 'Proba', 'Proba', 'Proba', 'Proba', 1, '011224455', 'Brace Jerkovic', 'Proba', 'stigla');
+(25, 28, 'Petar', 'Petar', 'Petar', 'Petar', 'Petar', 'Petar', 'Petar', 'Petar', 1, '011222333', 'Brace Jerkovic', 'www.google.rs', 'registrovan'),
+(26, 29, 'Petra', 'Petrovic', 'petraa', 'petraa', 'petraa', 'petraa', 'petraa', 'petraa', 1, '011224455', 'petraa@gmail.com', 'petraa@gmail.com', 'registrovan'),
+(27, 30, 'Proba', 'Proba', 'Proba', 'Proba', 'Proba', 'Proba', 'Proba', 'Proba', 1, '011224455', 'Brace Jerkovic', 'Proba', 'stigla'),
+(28, 31, 'Velja', 'Veljasin', 'Srbija', 'Srbija', 'proba', 'proba', 'proba', 'proba', 1, '01111111', 'Brace Jerkovic', 'www.google.com', 'stigla');
 
 -- --------------------------------------------------------
 
@@ -403,26 +412,36 @@ INSERT INTO `reset` (`idReset`, `idKorisnik`, `lozinka`, `datum`) VALUES
 (4, 2, '$2y$10$ybhKbTaJ/VZ.rqeSXTwh3OxihU5hwu7R7vR4XFke6I3FTXLh3MIzq', '2019-07-22 16:04:45'),
 (5, 2, '$2y$10$lEq3V.kSrWrSc2m8NdT6SuodLNByp2PyPOCzzjSeEMTkBI5StFKU6', '2019-07-22 17:15:15');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `status_ankete`
---
-
-DROP TABLE IF EXISTS `status_ankete`;
-CREATE TABLE IF NOT EXISTS `status_ankete` (
-  `idStatusAnkete` int(11) NOT NULL AUTO_INCREMENT,
-  `idKorisnik` int(11) NOT NULL,
-  `idAnketa` int(11) NOT NULL,
-  `statusAnkete` varchar(45) CHARACTER SET utf8 NOT NULL,
-  PRIMARY KEY (`idStatusAnkete`),
-  KEY `idAnketa_idx` (`idAnketa`),
-  KEY `idKori_idx` (`idKorisnik`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `anketa_odgovori`
+--
+ALTER TABLE `anketa_odgovori`
+  ADD CONSTRAINT `IdAnkRad` FOREIGN KEY (`idAnketuRadi`) REFERENCES `anketu_radi` (`idAnketuRadi`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `idAnkPit` FOREIGN KEY (`idAnketaPitanje`) REFERENCES `anketa_pitanja` (`idAnketaPitanje`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `anketa_pitanja`
+--
+ALTER TABLE `anketa_pitanja`
+  ADD CONSTRAINT `idAnke` FOREIGN KEY (`idAnketa`) REFERENCES `anketa` (`idAnketa`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `anketu_radi`
+--
+ALTER TABLE `anketu_radi`
+  ADD CONSTRAINT `idAn` FOREIGN KEY (`idAnketa`) REFERENCES `anketa` (`idAnketa`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `idKor` FOREIGN KEY (`idKorisnik`) REFERENCES `korisnici` (`idKorisnik`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `ocene`
+--
+ALTER TABLE `ocene`
+  ADD CONSTRAINT `idPita` FOREIGN KEY (`idPitanja`) REFERENCES `pitanja_poziv` (`idPitanja`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `idPrijav` FOREIGN KEY (`idPrijava`) REFERENCES `prijava_projekta` (`idPrijava`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `pitanja_poziv`
@@ -441,6 +460,7 @@ ALTER TABLE `poslata_obavestenja`
 -- Constraints for table `prijava_projekta`
 --
 ALTER TABLE `prijava_projekta`
+  ADD CONSTRAINT `idKorisn` FOREIGN KEY (`idKorisnik`) REFERENCES `korisnici` (`idKorisnik`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `idprojekt` FOREIGN KEY (`idProjekat`) REFERENCES `projekti` (`idProjekat`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -450,17 +470,17 @@ ALTER TABLE `projekti`
   ADD CONSTRAINT `idpoz` FOREIGN KEY (`idPoziv`) REFERENCES `programski_poziv` (`idpoziv`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `recenzenti`
+--
+ALTER TABLE `recenzenti`
+  ADD CONSTRAINT `idKorr` FOREIGN KEY (`idKorisnik`) REFERENCES `korisnici` (`idKorisnik`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `idOblastStr` FOREIGN KEY (`idOblastiStrucnosti`) REFERENCES `oblast_strucnosti` (`idOblastiStrucnosti`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `reset`
 --
 ALTER TABLE `reset`
   ADD CONSTRAINT `idReset_Kor` FOREIGN KEY (`idKorisnik`) REFERENCES `korisnici` (`idKorisnik`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `status_ankete`
---
-ALTER TABLE `status_ankete`
-  ADD CONSTRAINT `idAnketa` FOREIGN KEY (`idAnketa`) REFERENCES `anketa` (`idAnketa`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `idKori` FOREIGN KEY (`idKorisnik`) REFERENCES `korisnici` (`idKorisnik`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
