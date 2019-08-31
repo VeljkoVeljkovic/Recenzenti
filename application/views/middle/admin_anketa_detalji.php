@@ -62,24 +62,29 @@ if($anketa[0]['statusAnkete']!='zakljucano'){ ?>
     </div>
 
 
-   
-<?php }
-foreach($anketaPitanja as $a)
+
+<?php } ?>
+<table class="table table-responsive">
+<?php foreach($anketaPitanja as $a)
 {
    if(empty($a['odgovor1']))
   {
 ?>
-<div class="row">
-    <div class="col-6">
-           <textarea class="form-control" disabled><?= $a['pitanje']??"" ?></textarea><br>
-    </div>
-</div>
+    <tr>
+        <td>
+           <textarea class="form-control" disabled><?= $a['pitanje']??"" ?></textarea>
+        </td>
+        <td colspan="2" class="text-right">
+            <button class="btn dugme" onclick='obrisi(<?= $a['idAnketaPitanje'] ?>,<?= $a['idAnketa'] ?>)'>Obrisi</button>
+        </td>
+    </tr>
+
 <?php  } else { ?>
-<div class="row">
-<div class="col-6">
+       <tr>
+         <td>
            <textarea class="form-control" disabled><?= $a['pitanje']??"" ?></textarea><br>
-    </div>
-  <div class="col-6">
+         </td>
+         <td>
       <div class="form-check">
         <label class="form-check-label">
           <input type="radio" class="form-check-input" name="optradio" disabled><?= $a['odgovor1']??"" ?>
@@ -99,10 +104,15 @@ foreach($anketaPitanja as $a)
         <label class="form-check-label">
           <input type="radio" class="form-check-input" name="optradio" disabled><?= $a['odgovor4']??"" ?>
         </label>
-      </div> 
-   </div>
-</div>
-<?php  }} 
+      </div>
+    </td>
+    <td>
+        <button class="btn dugme"  onclick='obrisi(<?= $a['idAnketaPitanje'] ?>,<?= $a['idAnketa'] ?>)'>Obrisi</button>
+    </td>
+</tr>
+<?php  }}  ?>
+</table>
+<?php
 if($anketa[0]['statusAnkete']=='zakljucano'){
     ?>
 

@@ -125,6 +125,27 @@
             }
         }
         
+         function obrisi(idAnketaPitanje, idAnketa) {
+             if (confirm("Da li ste sigurni da zelite da obrisete pitanje")) {
+          
+         
+
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                  if (this.readyState == 4 && this.status == 200)
+                  {
+
+                      document.getElementById("projekat").innerHTML = this.responseText;
+                  } 
+                };
+                xhttp.open("POST", "<?php echo site_url('Ankete/brisanjePitanjaZaAnketu'); ?>", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send("idAnketaPitanje="+idAnketaPitanje+"&idAnketa="+idAnketa);
+            } 
+        
+        }
+        
     </script>
 
 

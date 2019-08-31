@@ -1,6 +1,7 @@
- <div id="projekat">
-             
+ <div id="projekat" class="mt-5">
+     
     </div>
+       
 <div class="row">
     <div class="offset-2 col-8 offset-2  mt-5">
         <input type="text" id="naslov" class="form-control" placeholder="Uneti naslov obaveštenja" />
@@ -73,8 +74,8 @@
                   if (this.readyState == 4 && this.status == 200)
                   {
                       document.getElementById("obavestenje").value="";
-              //        document.getElementById("projekat").innerHTML = this.responseText;
-                      alert('Obavestenje je uspesno poslato!');
+                    document.getElementById("projekat").innerHTML = this.responseText;
+                    
                   } 
                 };
                 xhttp.open("POST", "<?php echo site_url('obavestenja/slanjeObavestenja'); ?>", true);
@@ -98,7 +99,7 @@
                   {
                       document.getElementById("obavestenje").value="";
                       document.getElementById("projekat").innerHTML = this.responseText;
-                      alert('Obavestenje je uspesno poslato!');
+                     
                   } 
                 };
                 xhttp.open("POST", "<?php echo site_url('obavestenja/obavestenjeuInbox'); ?>", true);

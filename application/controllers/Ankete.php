@@ -1,5 +1,4 @@
 <?php
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -98,6 +97,15 @@ class Ankete extends CI_Controller
         $idKorisnik = $this->input->post('idKorisnik');
         $idAnketa = $this->input->post('idAnketa');
         $dodela = $this->AnketaModel->dodela($idAnketa,$idKorisnik);
+        $this->anketaPomocna($idAnketa);
+        
+    }
+    
+    public function brisanjePitanjaZaAnketu()
+    {
+        $idAnketaPitanje = $this->input->post('idAnketaPitanje');
+        $idAnketa = $this->input->post('idAnketa');
+        $brisanje = $this->AnketaModel->brisanjePitanja($idAnketaPitanje);
         $this->anketaPomocna($idAnketa);
         
     }

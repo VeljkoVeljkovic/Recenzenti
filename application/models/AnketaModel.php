@@ -110,6 +110,12 @@ $this->db->insert('anketa_pitanja', $data);
         return $query->result_array(); 
     }
     
+     public function brisanjePitanja($idAnketaPitanje)
+     {
+         $this->db->where('idAnketaPitanje', $idAnketaPitanje);
+         $this->db->delete('anketa_pitanja');
+     }
+    
     public function snimanjeOdgovora($idAnketuRadi,$idAnketaPitanje,$odgovor)
     {
         $data = array(

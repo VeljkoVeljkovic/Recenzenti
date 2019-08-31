@@ -18,7 +18,7 @@ class Obavestenja extends CI_Controller {
             redirect('Login');
         }
          $this->load->database();
-         $this->load->library ( 'form_validation' );
+         $this->load->library('form_validation'); 
         $this->load->model('ObavestenjaModel');
         
     }
@@ -51,12 +51,13 @@ class Obavestenja extends CI_Controller {
     //Slanje obavestenja putem mail-a pojedinacno ili na odredjenu grupu
     public function slanjeObavestenja()
     {
-//        $this->form_validation->set_rules ("obavestenje", "Obavestenje", "trim|required");
-//        $this->form_validation->set_rules ("sviRecenzenti", "Svi Recenzenti", "trim");
-//        $this->form_validation->set_rules ("oblastStrucnost", "Oblast Strucnost", "trim");
-//        if ( $this->form_validation->run() == FALSE) {
-//            redirect('Obavestenja/svaObavestenja');
-//        }
+        $this->form_validation->set_rules ("naslov", "Naslov", "trim|required");
+        $this->form_validation->set_rules ("obavestenje", "Obavestenje", "trim|required");
+        
+        if ( $this->form_validation->run() == FALSE) {
+        //   redirect('Obavestenja/svaObavestenja');
+            echo "Moraju biti popunjena sva polja!";
+        }
         $naslov= $this->input->post ("naslov");
         $obavestenje = $this->input->post ("obavestenje");
         $Recenzent = $this->input->post ("sviRecenzenti");
@@ -66,8 +67,7 @@ class Obavestenja extends CI_Controller {
             $recenzenteOdredjeneOblasti = $this->ObavestenjaModel->recezentOblastStrucnosti($oblastStrucnost);
         }
         $mail1 = $this->ObavestenjaModel->slanjeObavestenjaRecezentu($obavestenje, $Recenzent);
-
-        $mail2 =$mail1[0]['mejl'];
+     
         if($recenzenteOdredjeneOblasti) {
             foreach($recenzenteOdredjeneOblasti as $r) {
                 // $mejli=$r['mejl'];
@@ -100,8 +100,10 @@ class Obavestenja extends CI_Controller {
                  }
                  
             }
-        }
-     //   $mailOblastStrucnosti = $this->ObavestenjaModel->slanjeObavestenjaOblastStrucnosti($obavestenje, $oblastStrucnost);
+        }    
+      //   $mailOblastStrucnosti = $this->ObavestenjaModel->slanjeObavestenjaOblastStrucnosti($obavestenje, $oblastStrucnost);
+           if($mail1){
+        $mail2 =$mail1[0]['mejl'];
         $Mail = new PHPMailer(); 
         try {
             $Mail->SMTPDebug = false;
@@ -131,6 +133,9 @@ class Obavestenja extends CI_Controller {
 		echo("GRESKA: " . $Mail -> ErrorInfo);
 		die();
 	}
+      }   else {
+          echo "<br>Morate izabrati mail!";
+      }
     }
     
    public function obavestenjeuInbox()
@@ -139,6 +144,9 @@ class Obavestenja extends CI_Controller {
         $naslov= $this->input->post ("naslov");
         $obavestenje = $this->input->post ("obavestenje");
         $recenzent = $this->input->post ("sviRecenzenti");
+        if(empty($naslov)||empty($obavestenje)) {
+            echo "Morate uneti naslov i tekst obavestenja!";
+        } else {
         $oblastStrucnost = $this->input->post ("oblastStrucnost");
         //Priliko kreiranja obavestenja hvata se nakon inseta i poslednji snimljen red jer taj id tog red 
         // posle ubacujemo u tabelu poslata_obavestenja
@@ -153,13 +161,17 @@ class Obavestenja extends CI_Controller {
             {
                 
                 $slanjeObavestenja = $this->ObavestenjaModel->slanjeObavestenja($idObavestenja,$r['idKorisnik'], $date);
+                echo "<br>Uspesno poslato obavestenje";
             }
-        } else
+        } else if($recenzent)
         {
              $slanjeObavestenja = $this->ObavestenjaModel->slanjeObavestenja($idObavestenja,$recenzent->idKorisnik, $date);
+            echo "<br>Uspesno poslato obavestenje";
+        } else {
+            echo "<br>Nije izabrana ni jedan mail za slanje!";
         }
         
-        return $poruka = "Uspesno poslato obavestenje";
         
+        }  
    }
 }
