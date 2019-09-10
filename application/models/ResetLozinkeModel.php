@@ -43,7 +43,7 @@ class ResetLozinkeModel extends CI_Model {
                      $Mail->SMTPSecure="tls";
                      $Mail->SMTPAuth = true;
                       $Mail->Username="veljkoveljkovic.mdi@gmail.com";
-                    $Mail->Password="veljkoveljko";
+                    $Mail->Password="";
                     $Mail->SetFrom("veljkoveljkovic.mdi@gmail.com");
                      $Mail->Subject = "Reset Lozinke";
                      $Mail->Body = "Imate sat vremena da uradite reset lozinke";
