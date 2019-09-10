@@ -60,7 +60,7 @@ if($anketa[0]['statusAnkete']!='zakljucano'){ ?>
         
          <button class="btn" onclick='zakljucavanjeAnkete()'>Završi izradu ankete</button>
     </div>
-
+    <?= $greska??"" ?>
 
 
 <?php } ?>

@@ -21,13 +21,9 @@ class Reset_lozinke extends CI_Controller {
             redirect('//');
         }
         $this->load->model("ResetLozinkeModel");
-        $data['middle_podaci'] = ['forma' => false];
-        if ($this->ResetLozinkeModel->sendNewPasswordMail($this->input->post('korIme'))) {
-            $data['middle_podaci']['mail_ok'] = true;
-        } else {
-            $data['middle_podaci']['mail_ok'] = false;
-        }
-        $data["middle"] = "middle/reset_lozinke";
+        $poruka = $this->ResetLozinkeModel->sendNewPasswordMail($this->input->post('korIme'));
+        $data=['middle'=>'middle/reset_lozinke',
+            'middle_podaci'=>['poruka'=>$poruka]];        
         $this->load->view ( 'basicTemplate', $data );
     }
     

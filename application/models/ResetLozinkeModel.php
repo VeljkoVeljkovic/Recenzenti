@@ -1,6 +1,15 @@
-<?php
+    <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+        use \PHPMailer\PHPMailer\PHPMailer;
+	use \PHPMailer\PHPMailer\Exception;
+	use \PHPMailer\PHPMailer\SMTP;
+	
+	require("PHPMailer/src/Exception.php"); 
+        require("PHPMailer/src/PHPMailer.php"); 
+	require("PHPMailer/src/SMTP.php");
+	require("PHPMailer/src/OAuth.php");
+	require("PHPMailer/src/POP3.php"); 
+        
 /**
  * Description of ResetLozinkeModel
  *
@@ -13,6 +22,8 @@ class ResetLozinkeModel extends CI_Model {
         if (!$korisnik) {
             return false;
         }
+        
+        
         $this->load->helper('string');
         $novaLozinka = random_string('alnum', 15);
         $datum = date('Y-m-d H:i:s', time() + 3600);
@@ -22,15 +33,30 @@ class ResetLozinkeModel extends CI_Model {
             'datum' => $datum
         ];
         $this->db->insert('reset', $data);
-        $text = '<html><body><p>Nova lozinka je: ' . $novaLozinka . '</p><p>Vazi 1 h. </p></body></html>';
-        $this->load->library('email');
-        $this->email->from('your@example.com', 'Your Name');
-        $this->email->to($korisnik->mejl);
-//        $this->email->cc('another@another-example.com');
-//        $this->email->bcc('them@their-example.com');
-        $this->email->subject('Reset lozinke');
-        $this->email->message($text);
-        return $this->email->send();
+         $Mail = new PHPMailer(); 
+                 try {
+                     $Mail->SMTPDebug = false;
+                     $Mail->Mailer = 'smtp';
+                     $Mail->isSMTP();
+                     $Mail->Host="smtp.gmail.com";
+                     $Mail->Port=587;
+                     $Mail->SMTPSecure="tls";
+                     $Mail->SMTPAuth = true;
+                      $Mail->Username="veljkoveljkovic.mdi@gmail.com";
+                    $Mail->Password="veljkoveljko";
+                    $Mail->SetFrom("veljkoveljkovic.mdi@gmail.com");
+                     $Mail->Subject = "Reset Lozinke";
+                     $Mail->Body = "Imate sat vremena da uradite reset lozinke";
+                     $Mail->AddAddress($korisnik->mejl);
+
+                     if($Mail->Send(true)) {
+                        return true;
+                     } 
+                         
+                }  catch (Exception $e) {
+                       echo("GRESKA: " . $Mail -> ErrorInfo);
+                         die();
+        }
     }
     
 }

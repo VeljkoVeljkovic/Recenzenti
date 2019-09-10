@@ -71,7 +71,7 @@ class Ankete extends CI_Controller
        $this->anketaPomocna($idAnketaS);
     }
     
-    public function dodavanjeRadioPitanja()
+     public function dodavanjeRadioPitanja()
     {
         $idAnketa = $this->input->post('idAnketa');
         $pitanje = $this->input->post('pitanje');
@@ -79,9 +79,18 @@ class Ankete extends CI_Controller
         $odgovor2 = $this->input->post('odgovor2');
         $odgovor3 = $this->input->post('odgovor3');
         $odgovor4 = $this->input->post('odgovor4');
-        
+        if($pitanje&&$odgovor1&&$odgovor2&&$odgovor3&&$odgovor4){
         $dodavanjeRadioPitanja=$this->AnketaModel->dodajRadioPitanje($idAnketa,$pitanje,$odgovor1,$odgovor2,$odgovor3,$odgovor4);
-        $this->anketaPomocna($idAnketa);
+        $this->anketaPomocna($idAnketa);}
+        else
+        {
+            $anketa = $this->AnketaModel->anketaDetalj($idAnketa);
+            $anketaPitanja = $this->AnketaModel->anketaDetaljPitanja($idAnketa);
+            $recenzenti = $this->AnketaModel->recezentiTotal();
+            $greska = "Moraju biti popunjena sva Polja!";
+            $this->load->view('middle/admin_anketa_detalji',
+            ['anketa'=> $anketa, 'anketaPitanja'=>$anketaPitanja, 'recenzenti'=>$recenzenti, 'greska'=>$greska]);
+        }
      
     }
     
@@ -135,20 +144,25 @@ class Ankete extends CI_Controller
     {     
      $idAnketaPopunjena= $this->input->post('radi');
      $brojPitanja = $this->AnketaModel->idAnkete($idAnketaPopunjena);
-    if(count($_POST)-3<count($brojPitanja))
-    {
+ 
+     $key = [];
+     $post = [];
+     $post=$_POST;
+     $i = 0;
+      foreach($post as $key => $odgovor){
+       if(!empty($odgovor)) {
+      $i++; } }
+      if($i-2<count($brojPitanja)) {
         $idKorisnik = $this->session->userdata('user')->idKorisnik;
         $mojeAnkete = $this->AnketaModel->mojaAnketa($idKorisnik);
         $greska = "Mora se odgovoriti na sva pitanja";
         $data=['middle'=>'middle/recenzent_anketa',
             'middle_podaci'=>['mojeAnkete'=>$mojeAnkete, 'greska' => $greska]];
         $this->load->view('basicTemplate',$data);
-        
-    } else {
-     //echo $idAnketaPopunjena;
-     $key = [];
-     $post = [];
-     $post=$_POST;
+       
+      }  else {
+    
+     
    
        
     
@@ -176,6 +190,6 @@ class Ankete extends CI_Controller
             'middle_podaci'=>['mojeAnkete'=>$mojeAnkete, 'uspeh' => $uspeh]];
         $this->load->view('basicTemplate',$data);
    }
-    }         
+    }        
     }          
 

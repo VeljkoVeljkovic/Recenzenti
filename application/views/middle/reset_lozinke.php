@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-sm-5">
         <?php
-        if ($forma) {
+        if (!isset($poruka)) {
             echo form_open("Reset_lozinke/send"); 
             echo form_fieldset( "Reset lozinke" );
         ?>
@@ -19,7 +19,7 @@
         </div>
         <?php
         } else {
-            if ($mail_ok) {
+            if ($poruka == true) {
                 echo "<p>Nova lozinka vam je poslata na mail. Vazi 1 sat.</p>";
             } else {
                 echo "<p>Doslo je do greske pri slanju maila.</p>";

@@ -8,50 +8,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class RecenzentModel extends CI_Model{
     
-    const STATUS_PRIJAVE_STIGLA = 'stigla';
-    const STATUS_PRIJAVE_RAZMATRA_SE = 'razmatra_se';
-    const STATUS_PRIJAVE_PRIHVACENA = 'prihvacena';
-    const STATUS_PRIJAVE_ODBIJENA = 'odbijena';
+   
     
-    public function login($username, $password) {
-# 1. NACIN
-        $korisnik = $this->db
-                ->query('SELECT lozinka FROM korisnici WHERE korIme = ' . $this->db->escape($username))
-                ->row();
-        
-# 2. NACIN
-//        $korisnik = $this->db
-//                ->query('SELECT lozinka FROM korisnici WHERE korIme = ?', [$username])
-//                ->row();
-        
-# 3. NACIN
-//        $this->db->where('korIme', $username);
-//        $korisnik = $this->db->get('korisnici')->row();
-        
-        $logedIn = $korisnik && password_verify($password, $korisnik->lozinka);
-        if (!$logedIn) {
-          /* $this->db->select('r.idKorisnik, r.lozinka');
-           $this->db->from('reset AS r');
-           $this->db->join('korisnici as k', 'k.idKorisnik = r.idKorisnik');
-           $this->db->where('k.korIme', '>' '?');
-           $this->db->where('r.datum > ')*/
-           $sql = 'SELECT r.idKorisnik, r.lozinka '
-                    . 'FROM reset AS r '
-                    . 'JOIN korisnici AS k USING (idKorisnik)'
-                    . 'WHERE k.korIme = ?'
-                    . '  AND r.datum > ? '
-                    . 'ORDER BY r.datum DESC '
-                    . 'LIMIT 1';
-            $params = [$username, date('Y-m-d H:i:s')];
-            $resetLozinke = $this->db->query($sql, $params)->row();
-            $logedIn = $resetLozinke && password_verify($password, $resetLozinke->lozinka);
-            if ($logedIn) {
-                $this->db->where('idKorisnik', $resetLozinke->idKorisnik);
-                $this->db->update('korisnici', ['lozinka' => $resetLozinke->lozinka]);
-            }
+    public function login($username, $password)
+    {
+
+        $this->db->where('korIme', $username);
+        $korisnik = $this->db->get('korisnici')->row();
+        if(!$korisnik)
+        {
+            return false;
+            
         }
+        else
+        {
         
-        return $logedIn;
+      if(password_verify($password, $korisnik->lozinka))
+      {
+       
+           return true;
+      }
+            else
+            { return false;}
+        
+        }
     }
     
     public function dohvatiRecezentaPoId($recezentId) {
@@ -75,20 +55,7 @@ class RecenzentModel extends CI_Model{
         ///i mozemo da ga pozivamo vise puta i dohvatamo red po red
     }
     
-//    public function dohvatiSveUsere($pocetni_user,$limit){
-//        return $this->db->get('korisnici', $limit, $pocetni_user)->result();
-//    }
-//    
-//    public function BrojUsera(){
-//        return $this->db->count_all_results('korisnici');
-//    }
-    
-//    public function izmeniSliku($username, $slika) {// TODO promeni naziv funkcije
-//        // TODO promeniti da cita iz direktorijuma a ne iz dB-a
-//        $this->db->set('biografija', $slika);
-//        $this->db->where('korIme', $username);
-//        $this->db->update('korisnici');
-//    }
+
     
     
     public function register ( $mejl, $ime, $prezime, $nacionalnost, $zemlja, $NIO, $trenutnaFirma, $naucnoZvanje, $angazovanje, $oblastiStrucnosti,
