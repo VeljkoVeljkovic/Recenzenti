@@ -426,10 +426,11 @@ if (is_readable($file) && unlink($file)) {
     
    public function pretragaProjakata()
    {
-       $naziv = $this->input->post('naziv');
-       $oblastProjekta = $this->input->post('oblastProjekta');
+       $naziv = $this->input->get('naziv');
+       $oblastProjekta = $this->input->get('oblastProjekta');
+       
        $sviProjekti= $this->ProjektiModel->pretragaProjekat($naziv, $oblastProjekta);
-       $data=['middle'=>'middle/admin_svi_projekti',
+       $data=['middle'=>'middle/admin_projekti_pretraga',
             'middle_podaci'=>['sviProjekti'=>$sviProjekti]];
         $this->load->view('basicTemplate',$data);
    }

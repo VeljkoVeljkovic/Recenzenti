@@ -39,14 +39,19 @@ class ProjektiModel  extends CI_Model{
    //Vrsi pretragu projekta po nazivu, NIOrukovodioc ili po oblasti kojoj projekat pripada
    public function pretragaProjekat($naziv, $oblastProjekta)
    {
-       $this->db->select('*');
-       $this->db->or_like(array('nazivProjekta' => $naziv, 'NIOrukovodioc' => $naziv));
-       if(isset($oblastProjekta)){
+       
+      
+    
+        $this->db->like('nazivProjekta', $naziv); 
+       if(!empty($oblastProjekta)){
+          
           $this->db->where('oblastProjekta', $oblastProjekta); 
        }
+       
+       
        $query = $this->db->get('projekti');
        return $query->result_array(); 
-       
+    
    }
    
    //Selektuje pitanja za odredjeni poziv
